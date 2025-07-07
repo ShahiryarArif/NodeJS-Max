@@ -21,11 +21,20 @@ const server = http.createServer((req, res) => {
   } 
 
   if(url === "/message" && method === "POST") {
-    fs.writeFileSync("message.txt", "Hello g")
-    res.statusCode = 302;
-    res.setHeader("Location", "/testing");
-    // Or res.writeHead(302, { "Location": "/about" });
-    return res.end();
+    const body = [];
+    req.on("data", (chunk) => {
+      body.push(chunk);
+    });
+    return req.on("end", () => {
+      const parsedBody = Buffer.concat(body).toString();
+      const message = parsedBody.split("=")[1];
+      fs.writeFile("message.txt", message, (err) => {
+        res.statusCode = 302;
+        res.setHeader("Location", "/testing");
+        // Or res.writeHead(302, { "Location": "/about" });
+        return res.end();
+      });
+    });
   }
 
   res.setHeader("Content-Type", "text/html");
