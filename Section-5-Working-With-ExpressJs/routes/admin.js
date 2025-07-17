@@ -1,9 +1,11 @@
 import { Router } from "express";
+import { join } from "path";
+import { __dirname } from "../util/contants.js";
 
 const router = Router();
 
 router.get("/add-product", (req, res, next) => {
-  res.send("<form action='/product' method='POST'><input type='text' name='title'/><button type='submit'>Submit</button></form>")
+  res.sendFile(join(__dirname, "../", "views", "add-product.html"))
 })
 
 router.post("/product", (req, res, next) => {

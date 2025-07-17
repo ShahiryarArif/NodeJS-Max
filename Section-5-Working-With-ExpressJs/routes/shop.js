@@ -1,10 +1,12 @@
 import { Router } from "express";
+import { join } from "path";
+import { __dirname } from "../util/contants.js";
+
 
 const router = Router();
 
 router.get("/",(req, res, next) => {
-  console.log("In another middleware");
-  res.send("<h1>hello from the other side</h1>");
+  res.sendFile(join(__dirname, "../", "views", "shop.html"));
 })
 
 export default router;
