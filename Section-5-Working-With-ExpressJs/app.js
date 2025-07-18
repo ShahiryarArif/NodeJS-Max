@@ -1,8 +1,14 @@
-import http from "http";
-
+import bodyParser from "body-parser";
 import express from "express";
+import adminRoutes from "./routes/admin.js"
+import shopRoutes from "./routes/shop.js"
+import { rootDir } from "./util/contants.js";
 
 const app = express();
+
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.use(adminRoutes, shopRoutes);
 
 app.use((req, res, next) => {
   console.log("In the middleware");
@@ -10,10 +16,7 @@ app.use((req, res, next) => {
 })
 
 app.use((req, res, next) => {
-  console.log("In another middleware");
-  res.send("<h1>hello from the other side</h1>");
+  res.status(404).sendFile(rootDir, "views", "404.html")
 })
 
-const server = http.createServer(app);
-
-server.listen(3000);
+app.listen(3000);
