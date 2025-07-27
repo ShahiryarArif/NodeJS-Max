@@ -1,0 +1,23 @@
+<%- include('../includes/head') %>
+    <link rel="stylesheet" href="/css/cart.css">
+</head>
+
+<body>
+<%- include('../includes/navigation') %>
+
+    <main>
+        <h1>Your Cart</h1>
+        <% if (cart.length > 0) { %>
+            <ul class="cart-items">
+                <% cart.forEach(item => { %>
+                    <li class="cart-item">
+                        <h2 class="cart-item__title"><%= item.title %></h2>
+                        <p class="cart-item__price">$<%= item.price %></p>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } else { %>
+            <h2>Your cart is empty</h2>
+        <% } %>
+    </main>
+<%- include('../includes/end') %>
