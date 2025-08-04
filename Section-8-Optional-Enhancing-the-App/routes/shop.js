@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 
 const rootDir = require('../util/path');
-const { getProducts, getIndex, getCart, getCheckout } = require('../controllers/shop');
+const { getProducts, getIndex, getCart, getCheckout, getOrders } = require('../controllers/shop');
 
 const products = require('./admin').products;
 
@@ -14,6 +14,8 @@ router.get('/', getIndex);
 router.get('/products', getProducts);
 
 router.get('/cart', getCart);
+
+router.get('/orders', getOrders);
 
 router.get('/checkout', getCheckout);
 
