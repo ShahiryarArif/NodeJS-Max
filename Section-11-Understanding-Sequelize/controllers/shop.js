@@ -15,15 +15,11 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  console.log("User-Agent:", req.headers);
-  
   Product.findById(prodId)
-    .then((rows, fieldData) => {
-      // console.log("rows = ", rows);
-      
+    .then(product => {
       res.render('shop/product-detail', {
-        product: rows[0][0],
-        pageTitle: rows[0].title,
+        product: product,
+        pageTitle: product.title,
         path: '/products'
       });
     })
