@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   User.findById(1)
     .then(user => {
-      req.user = new User(user.username, user.email, user.cart, user._id);
+      req.user = user;
       next();
     })
     .catch(err => console.log(err));
@@ -33,6 +33,16 @@ app.use(errorController.get404);
 
 mongoose.connect('mongodb+srv://shahiryararif:12345@cluster0.y7gpodz.mongodb.net/shop?retryWrites=true&w=majority&appName=Cluster0')
   .then(result => {
+    User.findOne().then(user => {
+      if (!user) {
+        const user = new User({
+          name: 'Shahiryar',
+          email: 'test@test.com',
+          cart: { items: [] }
+        });
+        user.save();
+      }
+    });
     app.listen(3000);
   })
   .catch(err => {
