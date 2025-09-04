@@ -19,7 +19,6 @@ router.post('/add-product', isAuth, [
   check('title').isString()
     .isLength({ min: 3 })
     .trim(),
-  check('imageUrl').isURL(),
   check('price').isFloat(),
   check('description').isLength({ min: 5, max: 400 })
     .trim()
