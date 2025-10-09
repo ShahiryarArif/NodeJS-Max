@@ -106,12 +106,30 @@ class Feed extends Component {
       editLoading: true
     });
     // Set up data (with image!)
-    let url = 'URL';
+    let url = 'http://localhost:8080/feed/post';
+    let method = 'POST';
+    let body = {
+      title: postData.title,
+      content: postData.content,
+      // imageUrl: postData.imageUrl
+    };
     if (this.state.editPost) {
-      url = 'URL';
+      url = `http://localhost:8080/feed/post/${this.state.editPost._id}`;
+      method = 'PUT';
+      body = {
+        title: postData.title,
+        content: postData.content,
+        // imageUrl: postData.imageUrl
+      };
     }
 
-    fetch(url)
+    fetch(url, {
+      method: method,
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
           throw new Error('Creating or editing a post failed!');
